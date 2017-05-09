@@ -1,4 +1,4 @@
-import json, sys
+import json, sys, math
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
@@ -47,20 +47,39 @@ def change_class_name(name) :
         name = "Vehicle"
     return name
 
+
+def Distribution_class() :
+    with open(PATH) as json_file:
+        Architecture = json.load(json_file)
+        class_count = defaultdict(int)
+        for i,_ in enumerate(Architecture):
+            for j,_ in enumerate(Architecture[i]['regions']):
+                class_name = Architecture[i]['regions'][j]['class']
+                class_count[class_name] += 1
+
+        plt.bar(range(len(class_count)), class_count.values(), align='center')
+        plt.xticks(range(len(class_count)), class_count.keys())
+        for x, y in zip(range(len(class_count)), class_count.values()):
+            plt.text(x, y, str(y), horizontalalignment='center') # verticalalignment  option too
+        plt.xlabel("Class name")
+        plt.ylabel("# of class")
+        plt.title("Distribution of Class")
+        plt.show()
+
 def Intersection_class() :
     with open(PATH) as json_file :
         Architecture = json.load(json_file)
         image_list = list()
-        for i in range(len(Architecture)) :
+        for i,_ in enumerate(Architecture) :
             class_set = set()
-            for j in range(len(Architecture[i]['regions'])) :
+            for j,_ in enumerate(Architecture[i]['regions']) :
                 class_name = Architecture[i]['regions'][j]['class']
                 class_set.add(class_name)
             class_set = sorted(class_set)
             image_list.append(class_set)
 
         intersection_count = defaultdict(int)
-        for i in range(len(image_list)) :
+        for i,_ in enumerate(image_list) :
             intersection_class_str = "∩".join(str(element) for element in image_list[i])
             intersection_count[intersection_class_str] += 1
 
@@ -84,33 +103,18 @@ def Intersection_class() :
         plt.show()
         """
 
-
-def Distribution_of_class() :
-    with open(PATH) as json_file:
-        Architecture = json.load(json_file)
-        class_count = defaultdict(int)
-        for i in range(len(Architecture)):
-            for j in range(len(Architecture[i]['regions'])):
-                class_name = Architecture[i]['regions'][j]['class']
-                class_count[class_name] += 1
-
-        plt.bar(range(len(class_count)), class_count.values(), align='center')
-        plt.xticks(range(len(class_count)), class_count.keys())
-        for x, y in zip(range(len(class_count)), class_count.values()):
-            plt.text(x, y, str(y), horizontalalignment='center') # verticalalignment  option too
-        plt.xlabel("Class name")
-        plt.ylabel("# of class")
-        plt.title("Distribution of Class")
-        plt.show()
-
+# def Pixel_distribution(max) :
 
 
 if __name__ == "__main__" :
      method = sys.argv[1]
      if method.lower().__eq__("Distribution".lower()) :
-         Distribution_of_class()
+         Distribution_class()
      elif method.lower().__eq__("Intersection".lower()) :
          Intersection_class()
+
+
+
 
 
 
