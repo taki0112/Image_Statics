@@ -1,9 +1,8 @@
 # Image_Statistic
-2
 ## Image statistics for self-driving in Qualcomm
 
-3
-​## Requirements
+
+## Requirements
 * Python 3.6
 * matplotlib
 
