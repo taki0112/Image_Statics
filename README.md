@@ -1,5 +1,5 @@
 # Image_Statistic
-Image statistics for self-driving in Qualcomm
+Image statistics
 
 
 ## Requirements
