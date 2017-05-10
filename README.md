@@ -1,9 +1,6 @@
 # Image_Statistic
 Image statistics in ***Qualcomm***
 
---aaaa--
-
-
 ## Requirements
 * Python 3.6
 * matplotlib
