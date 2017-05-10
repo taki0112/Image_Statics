@@ -1,12 +1,15 @@
 # Image_Statistic
 Image statistics in ***Qualcomm***
 
+
 ## Requirements
 * Python 3.6
 * matplotlib
 
+
 ## Precautions
 * The `annotations.raf` file should be in the path where `main.py` is located.
+
 
 ## Usage
 If you want to see ***the distribution of class***... (options are case-insensitive)
@@ -26,6 +29,7 @@ If you want to see ***the distribution of pixel***... (options are case-insensit
 python main.py pixel 100
 ```
 
+
 ## Results
 ### Distribution
 ![Distribution](./assests/distribution.png)
@@ -35,6 +39,7 @@ python main.py pixel 100
 
 ### Pixel
 ![Pixel](./assests/pixel.png)
+
 
 ## Author
 Junho Kim
