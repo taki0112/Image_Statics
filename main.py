@@ -1,4 +1,4 @@
-import json, sys, math
+import json, sys
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
@@ -10,21 +10,17 @@ import matplotlib.pyplot as plt
 
 
 """
-
 Architecture (list type)
 image       [identifier], [imsize]
 regions     [ansize], [boxcorners] or [vertices], [class], [type]
    - linegroup   [tags], [vertices]
 version 
-
 json = list type
 regions = list type
 linegroup = list type... but may be length = 1
-
 box = dict[0]['regions'][0]['boxcorners']
 polygon = dict[0]['regions'][0]['vertices']
 line = dict[0]['regions'][0]['linegroup'][0]['vertices']
-
 """
 
 PATH = "./annotations.raf"
@@ -103,18 +99,61 @@ def Intersection_class() :
         plt.show()
         """
 
-# def Pixel_distribution(max) :
+def Pixel_distribution(max=100) :
+    with open(PATH) as json_file :
+        Architecture = json.load(json_file)
+        image_list = list()
+        for i,_ in enumerate(Architecture) :
+            y_list = list()
+            for j,_ in enumerate(Architecture[i]['regions']) :
+                if Architecture[i]['regions'][j]['type'].__eq__('line') :
+                    y = Get_pixel(Architecture[i]['regions'][j]['linegroup'][0]['vertices'])
 
+                elif Architecture[i]['regions'][j]['type'].__eq__('box') :
+                    y = Get_pixel(Architecture[i]['regions'][j]['boxcorners'])
+
+                else :
+                    y = Get_pixel(Architecture[i]['regions'][j]['vertices'])
+                y_list.append(y)
+            image_list.append(y_list)
+
+        pixel_count = defaultdict(int)
+        for i,_ in enumerate(image_list) :
+            for j,_ in enumerate(image_list[i]) :
+                key = image_list[i][j] // 10 * 10
+                if key < max :
+                    key = str(key)+"~"+str((key+10))
+                    pixel_count[key] += 1
+
+        # print(len(pixel_count))
+        plt.title("Pixel distribution, max=%d" %max, position=(0.5,1.05),  fontsize=20)
+
+        # pie 1
+        plt.pie(list(pixel_count.values()), labels=pixel_count.keys(), autopct='%1.1f%%',  startangle=140)
+        plt.axis('equal')
+        plt.show()
+
+
+def Get_pixel(coordinate) :
+    y_coordinate = coordinate[1::2]
+
+    return max(y_coordinate) - min(y_coordinate)
 
 if __name__ == "__main__" :
-     method = sys.argv[1]
-     if method.lower().__eq__("Distribution".lower()) :
-         Distribution_class()
-     elif method.lower().__eq__("Intersection".lower()) :
-         Intersection_class()
-
-
-
-
+    try :
+        method = sys.argv[1]
+        if method.lower().__eq__("Distribution".lower()) :
+            Distribution_class()
+        elif method.lower().__eq__("Intersection".lower()):
+            Intersection_class()
+        elif method.lower().__eq__("Pixel".lower()):
+            try :
+                Pixel_distribution(int(sys.argv[2]))
+            except :
+                print("Please enter the max value")
+    except :
+        print("Please enter the option...")
+        print("For example, (1) Distribution, (2) Intersection, (3) Pixel <Case-insensitive>" )
+        print("If you enter \"Pixel\", you must also enter the max value.")
 
 
