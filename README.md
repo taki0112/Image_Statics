@@ -1,5 +1,7 @@
 # Image_Statistic
-Image statistics
+Image statistics in ***Qualcomm***
+
+--aaaa--
 
 
 ## Requirements
