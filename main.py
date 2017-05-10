@@ -83,7 +83,7 @@ def Intersection_class() :
         # print(intersection_count)
 
 
-        plt.title("Intersection of Class", horizontalalignment = 'center', fontsize=20)
+        plt.title("Intersection of Class", position=(0.5,1.05), fontsize=20)
 
         # pie 1
         plt.pie(list(intersection_count.values()), labels=intersection_count.keys(), autopct='%1.1f%%',  startangle=140)
