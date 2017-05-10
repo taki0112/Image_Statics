@@ -21,10 +21,8 @@ python main.py intersection
 ```
 
 If you want to see the distribution of pixel... (options are case-insensitive)
-
-Note that you must also enter the max value next to the "pixel"
-
-There is no limit to the range of max values.
+* Note that you must also enter the max value next to the "pixel"
+* There is no limit to the range of max values.
 ```bash
 python main.py pixel 100
 ```
